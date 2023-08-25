@@ -2,11 +2,13 @@
 using HotelListing.API.Contracts;
 using HotelListing.API.Data;
 using HotelListing.API.Dtos.Country;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelListing.API.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class CountriesController : ControllerBase
@@ -81,6 +83,7 @@ public class CountriesController : ControllerBase
 
     // DELETE: api/Countries/5
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> DeleteCountry(int id)
     {
         if (!await CountryExists(id)) return NotFound();

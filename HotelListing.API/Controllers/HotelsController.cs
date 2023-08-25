@@ -2,11 +2,13 @@
 using HotelListing.API.Contracts;
 using HotelListing.API.Data;
 using HotelListing.API.Dtos.Hotel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelListing.API.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class HotelsController : ControllerBase
@@ -85,6 +87,7 @@ public class HotelsController : ControllerBase
 
     // DELETE: api/Hotels/5
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Administrator")]
     public async Task<IActionResult> DeleteHotel(int id)
     {
         if (!await HotelExists(id)) return NotFound();
